@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Viewer</title>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        var socket = io();
+        var currentImage = 1;
+        var numImages = 3;
+
+        function showImage() {
+            $('#image').attr('src', 'image' + currentImage + '.jpg');
+        }
+
+        $(document).ready(function() {
+            showImage();
+
+            $('#prev').click(function() {
+                currentImage--;
+                if (currentImage < 1) {
+                    currentImage = numImages;
+                }
+                showImage();
+                socket.emit('image change', currentImage);
+            });
+
+            $('#next').click(function() {
+                currentImage++;
+                if (currentImage > numImages) {
+                    currentImage = 1;
+                }
+                showImage();
+                socket.emit('image change', currentImage);
+            });
+
+            socket.on('image change', function(image) {
+                currentImage = image;
+                showImage();
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Image Viewer</h1>
+    <div>
+        <img id="image" src="">
+    </div>
+    <div>
+        <button id="prev">Prev</button>
+        <button id="next">Next</button>
+    </div>
+</body>
+</html>
