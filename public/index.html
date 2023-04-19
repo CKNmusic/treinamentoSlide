@@ -7,10 +7,10 @@
     <script>
         var socket = io();
         var currentImage = 1;
-        var numImages = 3;
+        var numImages = 9;
 
         function showImage() {
-            $('#image').attr('src', 'image' + currentImage + '.jpg');
+            $('#image').attr('src', 'https://tv.digitalsaude.net/dsaudenet/parceiro/' + currentImage + '.png');
         }
 
         $(document).ready(function() {
