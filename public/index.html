@@ -2,43 +2,45 @@
 <html>
 <head>
     <title>Image Viewer</title>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js" integrity="sha512-H/ZPUlL2QasDZSij1ZwJ8t+Je/QQ2myJtM9+IQxMx5BkmGJtnFh5L5rC23L/+aJ0e51li19g9fv9/U3+qF0RPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-        var socket = io();
-        var currentImage = 1;
-        var numImages = 9;
+       var socket = io();
+var currentImage = 1;
+var numImages = 3;
 
-        function showImage() {
-            $('#image').attr('src', 'https://tv.digitalsaude.net/dsaudenet/parceiro/' + currentImage + '.png');
+function showImage() {
+    $('#image').attr('src', 'image' + currentImage + '.jpg');
+}
+
+$(document).ready(function() {
+    showImage();
+
+    $('#prev').click(function() {
+        currentImage--;
+        if (currentImage < 1) {
+            currentImage = numImages;
         }
+        showImage();
+        socket.emit('image change', currentImage);
+    });
 
-        $(document).ready(function() {
-            showImage();
+    $('#next').click(function() {
+        currentImage++;
+        if (currentImage > numImages) {
+            currentImage = 1;
+        }
+        showImage();
+        socket.emit('image change', currentImage);
+    });
 
-            $('#prev').click(function() {
-                currentImage--;
-                if (currentImage < 1) {
-                    currentImage = numImages;
-                }
-                showImage();
-                socket.emit('image change', currentImage);
-            });
+    socket.on('image change', function(image) {
+        currentImage = image;
+        showImage();
+    });
+});
 
-            $('#next').click(function() {
-                currentImage++;
-                if (currentImage > numImages) {
-                    currentImage = 1;
-                }
-                showImage();
-                socket.emit('image change', currentImage);
-            });
-
-            socket.on('image change', function(image) {
-                currentImage = image;
-                showImage();
-            });
-        });
     </script>
 </head>
 <body>
