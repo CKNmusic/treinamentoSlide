@@ -1,6 +1,98 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+            html{ 
+                transition: 1s;
+
+            }
+            
+            body{
+                transition: 1s;
+
+                font-family: 'Lato', sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: rgb(51, 187, 241);
+            }
+            img{
+                width: 100%;
+                height: 100%;
+            }
+
+            h1, h5{
+                text-align: center;
+                color: white;
+            }
+
+            #slideNumber{
+                font-size: 60px;
+                color: white;
+            }
+
+            button{
+                width: 180px;
+                height: 50px;
+                border-radius: 40px;
+                border: none;
+                background-color: rgb(17, 162, 219);
+                color: white;
+            }
+
+                    .dt {
+                        margin-top: 10%;
+                    }
+            
+                    #image{
+                        margin: 10px;
+                        padding: 0px;
+                    width: 90%;
+                    border-radius: 20px;
+                        transition: 1s;
+
+                    }
+
+                    @media screen and (max-width: 768px) {
+                    
+                        #image{
+                        margin-top: 40px;
+
+                        }
+                    #image.fullscreen {
+                        transition: 1s;
+                        position: fixed;
+                        top: -130px;
+                        left: -70px;
+                        width: 130vw;
+                        height: 130vh;
+                        object-fit: contain;
+                        z-index: 9999;
+                        transform: rotate(90deg);
+                    }    
+                    
+                }
+            @media screen and (min-width: 768px) {
+
+                body{
+                background-color: rgba(140, 220, 252, 0);
+            }
+  /* regras CSS para telas de PC */
+                    .dt {
+                        display: none;
+                    }
+
+                    #image{
+                        margin: 0;
+                        padding: 0;
+                    width: 100%;
+                    border-radius: 0px;
+
+                    }
+                }
+
+
+        </style>
         <title>Image Viewer</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -8,11 +100,22 @@
         <script>
             var socket = io();
             var currentImage = 1;
-            var numImages = 3;
+            var numImages = 8;
 
+            
+            
             function showImage() {
                 $('#image').attr('src', 'https://tv.digitalsaude.net/dsaudenet/parceiro/' + currentImage + '.png');
+                //$('#slideNumber').attr('value', currentImage + "/" + numImages);
+                document.getElementById('slideNumber').innerHTML =currentImage + "/" + numImages;
             }
+
+                        $(document).ready(function() {
+            $("#image").click(function() {
+                $(this).toggleClass("fullscreen");
+            });
+            });
+
 
             $(document).ready(function () {
                 showImage();
@@ -43,13 +146,20 @@
         </script>
     </head>
     <body>
-        <h1>Image Viewer</h1>
-        <div>
-            <img id="image" src="">
+        <div class="vertical-page">
+            <h1 >
+                <img id="image" src="">
+            </h1>
         </div>
-        <div>
-            <button id="prev">Prev</button>
-            <button id="next">Next</button>
+        <div class="dt">
+            <h1 id="slideNumber"></h1>
+            <h1>
+                <br>
+                <button id="prev"><strong><</strong></button>
+                <button id="next"><strong>></strong></button>
+                <br>
+                <h5>Se a imagem não aparecer ao clicar, aguarde pois está carregando.</h5>
+            </h1>
         </div>
     </body>
 </html>
