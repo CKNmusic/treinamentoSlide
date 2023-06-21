@@ -101,12 +101,12 @@
         <script>
             var socket = io();
             var currentImage = 1;
-            var numImages = 30;
+            var numImages = 42;
 
             
             
             function showImage() {
-                $('#image').attr('src', 'imgs/' + currentImage + '.png');
+                $('#image').attr('src', 'imgs/' + currentImage + '.JPG');
                 //$('#slideNumber').attr('value', currentImage + "/" + numImages);
                 document.getElementById('slideNumber').innerHTML =currentImage + "/" + numImages;
             }
