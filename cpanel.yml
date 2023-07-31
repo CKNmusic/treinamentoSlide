@@ -1,0 +1,8 @@
+repositories:
+  - name: treinamentoSlide
+    url: https://github.com/CKNmusic/treinamentoSlide.git
+
+deploy:
+  to: /home/dsaudenet/gitT
+  branch: master
+  command: yarn install && node app.js
